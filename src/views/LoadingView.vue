@@ -1,0 +1,29 @@
+<template>
+  <div>
+    <!-- 登录等待页面 -->
+    <h1>正在登录中...</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  created() {
+    this.unWatch = this.$store.watch(
+      () => this.$store.getters["loginUser/status"],
+      (status) => {
+        if (status !== "loading") {
+          this.$router.push(this.$route.query.returnurl || "/");
+        }
+      },
+      {
+        immediate: true,
+      }
+    );
+  },
+  destroyed() {
+    this.unWatch();
+  },
+};
+</script>
+
+<style lang="scss" scoped></style>
